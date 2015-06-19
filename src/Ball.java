@@ -59,6 +59,7 @@ public class Ball {
 		}
 		if (collisionPlayer1()) {
 			xa = speed;
+			ya = ya * randomDirection();
 			collisionCount++;
 			try {
 				Sound.player1Hit();
@@ -68,6 +69,7 @@ public class Ball {
 		}
 		if (collisionPlayer2()) {
 			xa = - speed;
+			ya = ya * randomDirection();
 			collisionCount++;
 			try {
 				Sound.player2Hit();
@@ -86,10 +88,10 @@ public class Ball {
 	}
 
 	public void paint(Graphics2D g) {
-		ImageIcon tennisBallFace = new ImageIcon("tennis_ball.png");
-		ImageIcon tennisBallLeft = new ImageIcon("tennis_ball_left.png");
-		ImageIcon tennisBallRight = new ImageIcon("tennis_ball_right.png");
-		ImageIcon tennisBallBack = new ImageIcon("tennis_ball_blank.png");
+		ImageIcon tennisBallFace = new ImageIcon(Ball.class.getResource("resources/tennis_ball.png"));
+		ImageIcon tennisBallLeft = new ImageIcon(Ball.class.getResource("resources/tennis_ball_left.png"));
+		ImageIcon tennisBallRight = new ImageIcon(Ball.class.getResource("resources/tennis_ball_right.png"));
+		ImageIcon tennisBallBack = new ImageIcon(Ball.class.getResource("resources/tennis_ball_blank.png"));
 		timeCount++;
 		 if (timeCount >= 0 && timeCount <= 50) {
 		     tennisBall = tennisBallLeft.getImage();

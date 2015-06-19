@@ -14,6 +14,7 @@ public class Player1 {
 	int y = 310;
 	int ya = 0;
 	int player1Score = 0;
+	
 	private Game game;
 
 	public Player1(Game game) {
@@ -27,8 +28,8 @@ public class Player1 {
 	}
 
 	public void paint(Graphics2D g) {
-		ImageIcon racketUp = new ImageIcon("racket_up.png");
-		ImageIcon racketDown = new ImageIcon("racket_down.png");
+		ImageIcon racketUp = new ImageIcon(Player1.class.getResource("resources/racket_up.png"));
+		ImageIcon racketDown = new ImageIcon(Player1.class.getResource("resources/racket_down.png"));
 		if (y < 310) {
 			tennisRacket = racketUp.getImage();
 		} else {
@@ -52,9 +53,9 @@ public class Player1 {
 
 	public Rectangle getPlayer1Borders() {
 		if (y < 310) {
-		return new Rectangle(X - 50, y, WIDTH, HEIGHT - 35);
+		return new Rectangle(X - 50, y, WIDTH, HEIGHT - 50);
 		} else {
-			return new Rectangle(X - 50, y + 35, WIDTH, HEIGHT);
+			return new Rectangle(X - 50, y + 50, WIDTH, HEIGHT);
 		}
 	}
 	

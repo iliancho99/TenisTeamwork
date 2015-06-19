@@ -3,7 +3,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -15,12 +14,12 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
-public class Game extends JPanel { 
+public class Game extends JPanel {
+
 	Ball ball = new Ball(this);
 	Player1 player1 = new Player1(this);
 	Player2 player2 = new Player2(this);
-	 
-	  
+
 	public Game() {
 		addKeyListener(new KeyListener() {
 
@@ -54,33 +53,37 @@ public class Game extends JPanel {
 	@Override
 	public void paint(Graphics g) {
 		super.paint(g);
-		ImageIcon cook = new ImageIcon("cook.png");
-		ImageIcon chef = new ImageIcon("chef.png");
+		ImageIcon cook = new ImageIcon(Game.class.getResource("resources/cook.png"));
+		ImageIcon chef = new ImageIcon(Game.class.getResource("resources/chef.png"));
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		g2d.setStroke(new BasicStroke(10));
 		g2d.setColor(Color.WHITE);
 		g2d.draw(new Line2D.Float(0, 70, 1200, 70));
 		g.setFont(new Font("TimesRoman", Font.ITALIC, 24));
-		g2d.drawString("Cook Student", 405, 35);
+		g2d.drawString("Cook Student", 400, 40);
 		String pl1Score = Integer.toString(player1.getPl1Score());
-		g2d.drawString(pl1Score, 570, 35);
+		g2d.drawString(pl1Score, 570, 40);
 		String pl2Score = Integer.toString(player2.getPl2Score());
-		g2d.drawString(pl2Score, 610, 35);
-		g2d.drawString(":", 590, 35);
-		g2d.drawString("Chef Nakov", 650, 35);
+		g2d.drawString(pl2Score, 615, 40);
+		g2d.drawString(":", 597, 40);
+		g2d.drawString("Chef Nakov", 655, 40);
 		player1.paint(g2d);
 		player2.paint(g2d);
 		ball.paint(g2d);
-		g2d.drawImage(cook.getImage(), 770, 10, 50, 42, null);
-		g2d.drawImage(chef.getImage(), 350, 7, 53, 50, null);
+		g2d.drawImage(cook.getImage(), 340, 10, 50, 42, null);
+		g2d.drawImage(chef.getImage(), 790, 7, 53, 50, null);
 	}
 
 	public void pointMade() {
-		JOptionPane.showMessageDialog(this, "Ooops the pepper is out of the pan!", "Scooore!",
-				JOptionPane.YES_NO_OPTION);
-		ball = new Ball(this);
-		repaint();
+		int dialogResult = JOptionPane.showConfirmDialog(this, "Ooops the pepper is out of the pan! \n"
+				+ " Do you want to continue?", "Scooore!", JOptionPane.OK_CANCEL_OPTION);
+		if (dialogResult == JOptionPane.OK_OPTION) {
+			ball = new Ball(this);
+			repaint();
+		} else {
+			System.exit(ABORT);
+		}
 	}
 
 	public static void main(String[] args) throws InterruptedException {
@@ -92,6 +95,8 @@ public class Game extends JPanel {
 		frame.setResizable(false);
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		startOrExitGame(game);
 
 		while (true) {
 			game.move();
@@ -99,6 +104,16 @@ public class Game extends JPanel {
 			Thread.sleep(5);
 		}
 
+	}
+
+	private static void startOrExitGame(Game game) {
+		int dialogResult = JOptionPane.showConfirmDialog(game, "Are you ready to play? \n"
+				+ "Press \"OK\" to start the game or \"Cancel\" to exit", "Bell Pepper Tennis", JOptionPane.OK_CANCEL_OPTION);
+		if (dialogResult == JOptionPane.OK_OPTION) {
+			game.repaint();
+		} else {
+			System.exit(ABORT);
+		}
 	}
 
 }
